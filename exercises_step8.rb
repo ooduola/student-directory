@@ -22,23 +22,24 @@ def input_students
   students
 end 
 
-def filtered_students
-  puts  "which students whose name begins with a specific letter would you like to see?"
-  letter = gets.chomp.upcase
+def filter_name
+  puts "Enter a number to print out students whose name is shorter than given number: "
+  name = gets.chomp.to_i
 end
+
 # collect the students names with whose name begins with first letter.
-def print(students, first_letter)
+def print(students, name_size)
   filtered = students.map do |student| 
-    if student[:name][0] == first_letter
+    if student[:name].size < name_size
       "#{student[:name]} (#{student[:cohort]} cohort)"
     end
   end
   filtered.delete(nil)
   puts filtered 
-  puts "Overall, we have #{filtered.count} students with name starting #{first_letter}"
+  puts "Overall, we have #{filtered.count} students with names less than #{name_size} characters long"
 end
 
 students = input_students
+name_size = filter_name
 print_header
-first_letter = filtered_students
-print(students, first_letter)
+print(students, name_size)
