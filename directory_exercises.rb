@@ -13,6 +13,10 @@ def input_students
 
   while !name.empty? do
     # collecting individual student details 
+
+    puts "Now enter #{name}'s' cohort: "
+    cohort = gets.chomp
+    
     puts "enter #{name}'s hobbies use comma ','  to seperate: "
     hobbies = gets.chomp.split(",")
 
@@ -25,7 +29,7 @@ def input_students
     # storing student details
     students << {
       name: name,
-      cohort: :november,
+      cohort: cohort,
       hobbies: hobbies,
       country_of_birth: birth_country,
       height: height
