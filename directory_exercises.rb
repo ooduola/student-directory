@@ -1,7 +1,20 @@
 # let's put all students into an array
+
 def print_header
   puts  "The students of Villains Academy"
   puts "-------------" 
+end
+
+def print(students)
+  current_index = 0 
+  while current_index < students.length do
+    puts "#{current_index+1}. #{students[current_index][:name]} #{students[current_index][:cohort]} cohort"
+    current_index += 1
+  end
+end
+
+def print_footer(students)
+  puts "Overall, we have #{students.count} great students"
 end
 
 def input_students
@@ -10,36 +23,21 @@ def input_students
   # create an empty array
   students = []
   # get the first name
-  name = gets.chomp.capitalize
+  name = gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do 
     # add the student hash to the array
     students << {name: name, cohort: :november}
     puts "Now we have #{students.count} students"
     # get another name from the user
-    name = gets.chomp.capitalize
+    name = gets.chomp
   end
+  # return the array of students
   students
 end 
 
-def filter_name
-  puts "Enter number to print students names with characters less than given input: "
-  name = gets.chomp.to_i
-end
-
-# collect the students names with whose name begins with first letter.
-def print(students, name_size)
-  filtered = students.map do |student| 
-    if student[:name].size < name_size
-      "#{student[:name]} (#{student[:cohort]} cohort)"
-    end
-  end
-  filtered.delete(nil)
-  puts filtered 
-  puts "Overall, we have #{filtered.count} students with names less than #{name_size} characters long"
-end
-
+#nothing happens until we call the methods
 students = input_students
-name_size = filter_name
 print_header
-print(students, name_size)
+print(students)
+print_footer(students)
