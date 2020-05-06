@@ -41,11 +41,11 @@ end
 def print(students)
   # prints all student details
   students.each_with_index do |student, i|
-    puts " #{i+1}. #{student[:name]}"
-    puts "#{student[:cohort]} cohort"
-    puts "hobbies: #{student[:hobbies]}"
-    puts "country of birth: #{student[:country_of_birth]}"
-    puts "height: #{student[:height]}"
+    puts " #{i+1}. #{student[:name]}".center(20)
+    puts "#{student[:cohort]} cohort".center(20)
+    puts "hobbies: #{student[:hobbies]}".center(20)
+    puts "country of birth: #{student[:country_of_birth]}".center(20)
+    puts "height: #{student[:height]}".center(20)
     puts ""
   end 
 end
@@ -62,7 +62,7 @@ def print_filter_name(students)
   end
   # return filtered list and their details
   filtered.delete(nil)
-  puts filtered 
+  puts filtered
   puts "Overall, we have #{filtered.count} students with the name starting #{first_letter}"
 end
 
