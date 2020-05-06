@@ -23,7 +23,7 @@ def input_students
 end 
 
 def filter_name
-  puts "Enter a number to print out students whose name is shorter than given number: "
+  puts "Enter number to print students names with characters less than given input: "
   name = gets.chomp.to_i
 end
 
