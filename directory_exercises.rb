@@ -8,15 +8,24 @@ def input_students
   students = []
 
   # start with collecting student name
-  puts "Please enter name of the student"
-  name = gets.chomp
+  puts "enter 'continue' to start student entry: "
+  entry = gets.chomp.downcase
 
-  while !name.empty? do
+  while entry == "continue" do
     # collecting individual student details 
+    
+    puts "Please enter name of the student"
+    name = gets.chomp
+      if name == ""
+        name = "no entry".upcase
+      end
 
     puts "Now enter #{name}'s' cohort: "
     cohort = gets.chomp
-    
+      if cohort == ""
+        cohort = "no entry".upcase
+      end
+
     puts "enter #{name}'s hobbies use comma ','  to seperate: "
     hobbies = gets.chomp.split(",")
 
@@ -35,8 +44,8 @@ def input_students
       height: height
     }
     # option to add another student or end entry
-    puts "enter a new student name or press enter to stop"
-    name = gets.chomp
+    puts "enter 'continue' for next student or 'stop' to finish"
+    entry = gets.chomp.downcase
   end
   # returns final students details inputed
   students
