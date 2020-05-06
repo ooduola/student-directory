@@ -15,13 +15,13 @@ def input_students
     # collecting individual student details 
     
     puts "Please enter name of the student"
-    name = gets.chomp
+    name = gets.chomp.to_sym
       if name == ""
         name = "no entry".upcase
       end
 
     puts "Now enter #{name}'s' cohort: "
-    cohort = gets.chomp
+    cohort = gets.chomp.to_sym
       if cohort == ""
         cohort = "no entry".upcase
       end
@@ -30,7 +30,7 @@ def input_students
     hobbies = gets.chomp.split(",")
 
     puts "enter #{name}'s country of birth: "
-    birth_country = gets.chomp
+    birth_country = gets.chomp.to_sym
 
     puts "enter #{name}'s height in cm: "
     height = gets.chomp.to_i
@@ -84,7 +84,4 @@ def print_footer(students)
 end
 
 #nothing happens until we call the methods
-students = input_students
-print_header
-print(students)
-print_footer(students)
+p input_students
