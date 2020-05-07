@@ -4,23 +4,20 @@ def print_header
 end
 
 def input_students
-  # all inputed students details will be stored in an Array
+  # all students info will be stored in an Array
   students = []
 
-  # start with collecting student name
+  # collection of individual student info 
   puts "enter 'continue' to start student entry: "
   entry = gets.chomp.downcase
-
   while entry == "continue" do
-    # collection of individual student info 
-  
     puts "Please enter name of the student"
     # added default value if nil is entered. 
     name = gets.chomp.to_sym
       if name == ""
         name = "no entry".upcase
       end
-    
+
     # added input options for cohort entry
     cohort_input_options = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "decemeber"]
     
@@ -63,6 +60,26 @@ def input_students
   students
 end
 
+def print_by_cohort(students)
+
+  students_cohort = students 
+  
+  # Once you complete the previous exercise, change the way the users are displayed: print them grouped by cohorts. 
+  # To do this, you'll need to get a list of all existing cohorts 
+  # (the map() method may be useful but it's not the only option), iterate over it and only print the students from that cohort.
+
+  cohort_months = students_cohort.map { |student| student[:cohort] }
+  
+  cohort_months.uniq.each do |month|
+    puts "#{month} cohort".upcase
+      students_cohort.each do |profile|
+        if profile[:cohort] == month
+          puts "#{profile[:name]}"
+        end 
+      end 
+    end 
+end
+  
 def print(students)
   # prints all student details
   students.each_with_index do |student, i|
@@ -95,5 +112,21 @@ def print_footer(students)
   puts "Overall, we have #{students.count} great students"
 end
 
+students_cohort = [
+  { name: "Dr. Hannibal Lecter", cohort: :january},
+  { name: "Darth Vader", cohort: :january},
+  { name: "Nurse Ratched", cohort: :february},
+  { name: "Michael Corleone", cohort: :february},
+  { name: "Alex DeLarge", cohort: :march},
+  { name: "The Wicked Witch of the West", cohort: :march},
+  { name: "Terminator", cohort: :may},
+  { name: "Freddy Krueger", cohort: :may},
+  { name: "The Joker", cohort: :june},
+  { name: "Joffrey Baratheon", cohort: :july},
+  { name: "Norman Bates", cohort: :july},
+  ]
+
 #nothing happens until we call the methods
-p input_students
+students = students_cohort
+print_by_cohort(students)
+print_footer(students)
