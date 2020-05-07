@@ -12,9 +12,10 @@ def input_students
   entry = gets.chomp.downcase
 
   while entry == "continue" do
-    # collecting individual student details 
+    # collection of individual student info 
     
     puts "Please enter name of the student"
+    # added default value if nil is entered. 
     name = gets.chomp.to_sym
       if name == ""
         name = "no entry".upcase
@@ -47,7 +48,7 @@ def input_students
     puts "enter 'continue' for next student or 'stop' to finish"
     entry = gets.chomp.downcase
   end
-  # returns final students details inputed
+  # returns final entered students info
   students
 end
 
