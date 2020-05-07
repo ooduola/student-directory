@@ -13,19 +13,30 @@ def input_students
 
   while entry == "continue" do
     # collection of individual student info 
-    
+  
     puts "Please enter name of the student"
     # added default value if nil is entered. 
     name = gets.chomp.to_sym
       if name == ""
         name = "no entry".upcase
       end
-
-    puts "Now enter #{name}'s' cohort: "
-    cohort = gets.chomp.to_sym
-      if cohort == ""
-        cohort = "no entry".upcase
-      end
+    
+    # added input options for cohort entry
+    cohort_input_options = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "decemeber"]
+    
+    # created loop to stop user entering invalid input or typo's.
+    cohort = "invalid"
+    until cohort != "invalid" do
+      puts "Which cohort is #{name}'s' in?: "
+      cohort = gets.chomp.downcase
+        if cohort == ""
+          cohort = "no entry".upcase
+        elsif cohort_input_options.include?(cohort)
+          cohort
+        else 
+          cohort = "invalid"
+        end
+    end
 
     puts "enter #{name}'s hobbies use comma ','  to seperate: "
     hobbies = gets.chomp.split(",")
