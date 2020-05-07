@@ -9,11 +9,11 @@ def input_students
 
   # collection of individual student info 
   puts "enter 'continue' to start student entry: "
-  entry = gets.chomp.downcase
+  entry = gets.delete("\n").downcase
   while entry == "continue" do
     puts "Please enter name of the student"
     # added default value if nil is entered. 
-    name = gets.chomp.to_sym
+    name = gets.delete("\n").to_sym
       if name == ""
         name = "no entry".upcase
       end
@@ -25,7 +25,7 @@ def input_students
     cohort = "invalid"
     until cohort != "invalid" do
       puts "Which cohort is #{name}'s' in?: "
-      cohort = gets.chomp.downcase
+      cohort = gets.delete("\n").downcase
         if cohort == ""
           cohort = "no entry".upcase
         elsif cohort_input_options.include?(cohort)
@@ -36,13 +36,13 @@ def input_students
     end
 
     puts "enter #{name}'s hobbies use comma ','  to seperate: "
-    hobbies = gets.chomp.split(",")
+    hobbies = gets.delete("\n").split(",")
 
     puts "enter #{name}'s country of birth: "
-    birth_country = gets.chomp.to_sym
+    birth_country = gets.delete("\n").to_sym
 
     puts "enter #{name}'s height in cm: "
-    height = gets.chomp.to_i
+    height = gets.delete("\n").to_i
 
     # storing student details
     students << {
@@ -54,7 +54,7 @@ def input_students
     }
     # option to add another student or end entry
     puts "enter 'continue' for next student or 'stop' to finish"
-    entry = gets.chomp.downcase
+    entry = gets.delete("\n").downcase
   end
   # returns final entered students info
   students
