@@ -109,24 +109,14 @@ def print_filter_name(students)
 end
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students"
+  if students.length < 2
+    puts "Overall, we have #{students.count} great student"
+  elsif students.length > 1
+    puts "Overall, we have #{students.count} great students"
+  end
 end
 
-students_cohort = [
-  { name: "Dr. Hannibal Lecter", cohort: :january},
-  { name: "Darth Vader", cohort: :january},
-  { name: "Nurse Ratched", cohort: :february},
-  { name: "Michael Corleone", cohort: :february},
-  { name: "Alex DeLarge", cohort: :march},
-  { name: "The Wicked Witch of the West", cohort: :march},
-  { name: "Terminator", cohort: :may},
-  { name: "Freddy Krueger", cohort: :may},
-  { name: "The Joker", cohort: :june},
-  { name: "Joffrey Baratheon", cohort: :july},
-  { name: "Norman Bates", cohort: :july},
-  ]
-
 #nothing happens until we call the methods
-students = students_cohort
+students = input_students
 print_by_cohort(students)
 print_footer(students)
