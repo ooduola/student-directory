@@ -23,13 +23,21 @@ def print_header
 end
 
 def print(students)
-  students.each do |student|
-    puts "#{student[:name]} #{student[:cohort]} cohort"
+  # added if statement to only print once student name is added.
+  if students.count >= 1
+    students.each do |student|
+      puts "#{student[:name]} #{student[:cohort]} cohort"
+    end
+  else
+    puts "We have zero students"
   end
 end
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students"
+  # added if statement to only print footer if student name has been added.
+  if students.count >= 1
+    puts "Overall, we have #{students.count} great students"
+  end
 end
 
 
