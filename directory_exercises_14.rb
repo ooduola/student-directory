@@ -75,6 +75,21 @@ def print_footer
   puts "Overall, we have #{@students.count} great students"
 end
 
+def save_students_old
+  # ask user to select file to save students to
+  puts "Please enter filename you'd like to save student info to: "
+  filename = STDIN.gets.chomp
+  # open the file for writing
+  file = File.open(filename, "w")
+  # interate over the array of students
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort]]
+    file.puts student_data.join(",")
+  end
+  file.close
+  puts "Students were succesfully saved to #{filename}"
+end
+
 def save_students
   # ask user to select file to save students to
   puts "Please enter filename you'd like to save student info to: "
@@ -90,18 +105,8 @@ def save_students
   puts "Students were succesfully saved to #{filename}"
 end
 
-def load_students_default_old(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    add_students(name, cohort = :november) 
-  end
-  file.close
-  puts "#{filename} was succesfully loaded"
-end
-
 def load_students_default(filename = "students.csv")
-  File.open(filename, "r").readlines.each do |line|
+  File.foreach(filename, "r") do |line|
     name, cohort = line.chomp.split(',')
     add_students(name, cohort = :november) 
   end
