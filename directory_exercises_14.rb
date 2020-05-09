@@ -1,6 +1,6 @@
 @students = [] # an empty array accessible to all methods
 
-def input_students
+def input_students_process
   input_students_user_message
   # get the first name
   name = STDIN.gets.chomp
@@ -44,7 +44,7 @@ def process(selection)
   # 3. do what the user has asked
   case selection 
     when "1"
-      input_students
+      input_students_process
     when "2"
       show_students
     when "3"
@@ -73,18 +73,6 @@ def print_footer
   puts "Overall, we have #{@students.count} great students"
 end
 
-def save_students_old
-  # open the file for writing
-  file = File.open("students.csv", "w")
-  # interate over the array of students
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
-  end
-  file.close
-end
-
 def save_students
   # open the file for writing
   file = File.open("students.csv", "w")
@@ -95,7 +83,6 @@ def save_students
   end
   file.close
 end
-
 
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
@@ -108,7 +95,7 @@ end
 
 def try_load_students_default
   filename = ARGV.first # first argument from the commman line
-  (filename = "students.csv") if filename.nil? # get out of the method if it isn't given
+  (filename = "students.csv") if filename.nil? # default file if no argument given
   if File.exists?(filename) # if it exists
     load_students(filename)
     puts "Loaded #{@students.count} from #{filename}"
