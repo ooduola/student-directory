@@ -102,17 +102,11 @@ def load_students(filename = "students.csv")
   puts "Which file would you like to upload students from?"
   filename = STDIN.gets.chomp
   if File.exists?(filename) # if it exists
-      file = File.open(filename, "r")
-      file.readlines.each do |line|
-      name, cohort = line.chomp.split(',')
-      add_students(name, cohort = :november) 
-      file.close
-      end
+    load_students_default
   else # if it doesn't exist
     puts "Sorry, #{filename} file doesn't exist"
     exit # quit the program
   end
-  puts "#{filename} was succesfully loaded"
 end
 
 def try_load_students_default
