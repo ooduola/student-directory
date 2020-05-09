@@ -76,13 +76,15 @@ def print_footer
 end
 
 def save_students
+  # ask user to select file to save students to
+  puts "Please enter filename you'd like to save student info to: "
+  filename = STDIN.gets.chomp
   # open the file for writing
-  file = File.open("students.csv", "w")
+  file = File.open(filename, "w")
   # interate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+    file.puts student_data.join(",")
   end
   file.close
   puts "Students were succesfully saved to #{filename}"
