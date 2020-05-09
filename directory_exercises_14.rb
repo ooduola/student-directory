@@ -90,13 +90,21 @@ def save_students
   puts "Students were succesfully saved to #{filename}"
 end
 
-def load_students_default(filename = "students.csv")
+def load_students_default_old(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
     add_students(name, cohort = :november) 
   end
   file.close
+  puts "#{filename} was succesfully loaded"
+end
+
+def load_students_default(filename = "students.csv")
+  File.open(filename, "r").readlines.each do |line|
+    name, cohort = line.chomp.split(',')
+    add_students(name, cohort = :november) 
+  end
   puts "#{filename} was succesfully loaded"
 end
 
