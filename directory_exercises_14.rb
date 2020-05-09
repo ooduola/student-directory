@@ -73,7 +73,7 @@ def print_footer
   puts "Overall, we have #{@students.count} great students"
 end
 
-def save_students
+def save_students_old
   # open the file for writing
   file = File.open("students.csv", "w")
   # interate over the array of students
@@ -84,6 +84,18 @@ def save_students
   end
   file.close
 end
+
+def save_students
+  # open the file for writing
+  file = File.open("students.csv", "w")
+  # interate over the array of students
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort]]
+    file.puts student_data.join(",")
+  end
+  file.close
+end
+
 
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
