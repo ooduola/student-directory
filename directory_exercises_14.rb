@@ -1,4 +1,3 @@
-
 @students = [] # an empty array accessible to all methods
 
 def input_students
@@ -27,7 +26,7 @@ def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "4. Load students.csv"
   puts "9. Exit" # 9 because we'll be adding more items
 end
 
@@ -82,18 +81,18 @@ def save_students
   file.close
 end
 
-def load_students
+def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
-    add_students(name, cohort = :november)
+    add_students(name, cohort = :november) 
   end
   file.close
 end
 
-def try_load_students
+def try_load_students_default
   filename = ARGV.first # first argument from the commman line
-  return if filename.nil? # get out of the method if it isn't given
+  (filename = "students.csv") if filename.nil? # get out of the method if it isn't given
   if File.exists?(filename) # if it exists
     load_students(filename)
     puts "Loaded #{@students.count} from #{filename}"
@@ -104,10 +103,10 @@ def try_load_students
 end
 
 def add_students(name, cohort = :november)
+  # add to student info to array
   @students << {name: name, cohort: cohort}
 end
 
 #nothing happens until we call the methods
-try_load_students
+try_load_students_default
 interactive_menu
-
