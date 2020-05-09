@@ -30,8 +30,8 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load students.csv"
+  puts "3. Save students to a file"
+  puts "4. Load students from file"
   puts "9. Exit" 
 end
 
@@ -81,14 +81,14 @@ def save_students
   # interate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
-    file.puts student_data.join(",")
-    
+    csv_line = student_data.join(",")
+    file.puts csv_line
   end
   file.close
-  puts "Students were succesfully saved"
+  puts "Students were succesfully saved to #{filename}"
 end
 
-def load_students(filename = "students.csv")
+def load_students_default(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
@@ -98,11 +98,28 @@ def load_students(filename = "students.csv")
   puts "#{filename} was succesfully loaded"
 end
 
+def load_students(filename = "students.csv")
+  puts "Which file would you like to upload students from?"
+  filename = STDIN.gets.chomp
+  if File.exists?(filename) # if it exists
+      file = File.open(filename, "r")
+      file.readlines.each do |line|
+      name, cohort = line.chomp.split(',')
+      add_students(name, cohort = :november) 
+      file.close
+      end
+  else # if it doesn't exist
+    puts "Sorry, #{filename} file doesn't exist"
+    exit # quit the program
+  end
+  puts "#{filename} was succesfully loaded"
+end
+
 def try_load_students_default
   filename = ARGV.first # first argument from the commman line
   (filename = "students.csv") if filename.nil? # default file if no argument given
   if File.exists?(filename) # if it exists
-    load_students(filename)
+    load_students_default(filename)
     puts "Loaded #{@students.count} from #{filename}"
   else # if it doesn't exist
     puts "Sorry, #{filename} doesn't exist"
