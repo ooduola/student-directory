@@ -95,13 +95,12 @@ def save_students
   puts "Please enter filename you'd like to save student info to: "
   filename = STDIN.gets.chomp
   # open the file for writing
-  file = File.open(filename, "w")
+  File.open(filename, "w") do |file|
   # interate over the array of students
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    file.puts student_data.join(",")
+    @students.each do |student|
+      file.puts [student[:name], student[:cohort]].join(",")
+    end
   end
-  file.close
   puts "Students were succesfully saved to #{filename}"
 end
 
