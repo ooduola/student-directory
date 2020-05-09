@@ -12,6 +12,7 @@ def input_students_process
     # get another name from the user
     name = STDIN.gets.chomp
   end
+  puts "Students were succesfully added"
 end 
 
 def input_students_user_message
@@ -52,6 +53,7 @@ def process(selection)
     when "4"
       load_students
     when "9"
+      puts "Program exit successful. See you next time"
       exit # this will cause the program to terminate
     else 
       puts "I don't know what you meant, try again"
@@ -80,8 +82,10 @@ def save_students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     file.puts student_data.join(",")
+    
   end
   file.close
+  puts "Students were succesfully saved"
 end
 
 def load_students(filename = "students.csv")
@@ -91,6 +95,7 @@ def load_students(filename = "students.csv")
     add_students(name, cohort = :november) 
   end
   file.close
+  puts "#{filename} was succesfully loaded"
 end
 
 def try_load_students_default
