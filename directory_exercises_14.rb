@@ -2,11 +2,11 @@
 
 def input_students_process
   input_students_user_message
-  # get the first name
+  # get the first student name
   name = STDIN.gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do 
-    # add the student hash to the array
+    # add student info hash to the array
     add_students(name, cohort = :november)
     puts "Now we have #{@students.count} students"
     # get another name from the user
@@ -54,7 +54,7 @@ def process(selection)
       load_students
     when "9"
       puts "Program exit successful. See you next time"
-      exit # this will cause the program to terminate
+      exit # will cause the program to terminate
     else 
       puts "I don't know what you meant, try again"
   end
@@ -76,7 +76,7 @@ def print_footer
 end
 
 def save_students_old
-  # ask user to select file to save students to
+  # ask user to select filename to input students info
   puts "Please enter filename you'd like to save student info to: "
   filename = STDIN.gets.chomp
   # open the file for writing
@@ -91,12 +91,12 @@ def save_students_old
 end
 
 def save_students
-  # ask user to select file to save students to
+  # ask user to select filename to input students info
   puts "Please enter filename you'd like to save student info to: "
   filename = STDIN.gets.chomp
   # open the file for writing
   File.open(filename, "w") do |file|
-  # interate over the array of students
+  # interate over the array of students and store in filename
     @students.each do |student|
       file.puts [student[:name], student[:cohort]].join(",")
     end
@@ -105,6 +105,7 @@ def save_students
 end
 
 def load_students_default(filename = "students.csv")
+  # interate over each line and store to name, cohort variables
   File.foreach(filename, "r") do |line|
     name, cohort = line.chomp.split(',')
     add_students(name, cohort = :november) 
