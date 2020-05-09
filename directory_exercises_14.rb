@@ -82,7 +82,7 @@ def save_students
   file.close
 end
 
-def load_students(filename = "students.csv")
+def load_students
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
