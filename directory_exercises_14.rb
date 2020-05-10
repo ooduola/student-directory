@@ -50,7 +50,7 @@ def process(selection)
       load_students
     when "9"
       puts "Program exit successful. See you next time"
-      exit # will cause the program to terminate
+      exit 
     else 
       puts "I don't know what you meant, try again"
   end
@@ -94,11 +94,15 @@ def load_students(filename = "students.csv")
   puts "Which file would you like to upload students from?"
   filename = STDIN.gets.chomp
   if File.exists?(filename)
-    load_students_default
+    CSV.foreach(filename, "r") do |line|
+      name, cohort = line
+      add_students(name, cohort = :november)
+    end
   else 
     puts "Sorry, #{filename} file doesn't exist"
     exit 
   end
+  puts "#{filename} was succesfully loaded"
 end
 
 def try_load_students_default
