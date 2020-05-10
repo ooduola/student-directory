@@ -1,17 +1,13 @@
 require 'csv'
-@students = [] # an empty array accessible to all methods
+@students = []
 
 def input_students_process
-  input_students_user_message
-  # get the first student name
-  name = STDIN.gets.chomp
-  # while the name is not empty, repeat this code
+  input_students_user_message 
+  name = STDIN.gets.chomp # get the first student name
   while !name.empty? do 
-    # add student info hash to the array
-    add_students(name, cohort = :november)
+    add_students(name, cohort = :november) # add student info: hash to array
     puts "Now we have #{@students.count} students"
-    # get another name from the user
-    name = STDIN.gets.chomp
+    name = STDIN.gets.chomp # get another input from user
   end
   puts "Students were succesfully added"
 end 
@@ -43,8 +39,7 @@ def show_students
 end
 
 def process(selection)
-  # 3. do what the user has asked
-  case selection 
+  case selection # 3. do what the user has asked
     when "1"
       input_students_process
     when "2"
@@ -77,22 +72,18 @@ def print_footer
 end
 
 def save_students
-  # ask user to select filename to input students info
   puts "Please enter filename you'd like to save student info to: "
   filename = STDIN.gets.chomp
-  # open the file for writing
- CSV.open(filename, "wb") do |csv|
-  # interate over the array of students and store in filename
-    @students.each do |student|
-      csv << [student[:name], student[:cohort]]
+ CSV.open(filename, "wb") do |csv| # open the file for writing
+    @students.each do |student| # interate over the array of students and store in filename
+    csv << [student[:name], student[:cohort]]
     end
   end
   puts "Students were succesfully saved to #{filename}"
 end
 
 def load_students_default(filename = "students.csv")
-  # interate over each line and store to name, cohort variables
-  CSV.foreach(filename, "r") do |line|
+  CSV.foreach(filename, "r") do |line| # interate over each line and store to name, cohort variables
     name, cohort = line
     add_students(name, cohort = :november) 
   end
@@ -100,7 +91,6 @@ def load_students_default(filename = "students.csv")
 end
 
 def load_students(filename = "students.csv")
-  # ask for filename to upload and check if it exists.
   puts "Which file would you like to upload students from?"
   filename = STDIN.gets.chomp
   if File.exists?(filename)
@@ -114,20 +104,18 @@ end
 def try_load_students_default
   filename = ARGV.first # first argument from the commman line
   (filename = "students.csv") if filename.nil? # default file if no argument given
-  if File.exists?(filename) # if it exists
+  if File.exists?(filename) 
     load_students_default(filename)
     puts "Loaded #{@students.count} from #{filename}"
-  else # if it doesn't exist
+  else 
     puts "Sorry, #{filename} doesn't exist"
-    exit # quit the program
+    exit 
   end
 end
 
 def add_students(name, cohort = :november)
-  # add to student info to array
   @students << {name: name, cohort: cohort}
 end
 
-#nothing happens until we call the methods
 try_load_students_default
 interactive_menu
