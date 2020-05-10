@@ -1,3 +1,4 @@
+require 'csv'
 @students = [] # an empty array accessible to all methods
 
 def input_students_process
@@ -75,30 +76,15 @@ def print_footer
   puts "Overall, we have #{@students.count} great students"
 end
 
-def save_students_old
-  # ask user to select filename to input students info
-  puts "Please enter filename you'd like to save student info to: "
-  filename = STDIN.gets.chomp
-  # open the file for writing
-  file = File.open(filename, "w")
-  # interate over the array of students
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    file.puts student_data.join(",")
-  end
-  file.close
-  puts "Students were succesfully saved to #{filename}"
-end
-
 def save_students
   # ask user to select filename to input students info
   puts "Please enter filename you'd like to save student info to: "
   filename = STDIN.gets.chomp
   # open the file for writing
-  File.open(filename, "w") do |file|
+ CSV.open(filename, "wb") do |csv|
   # interate over the array of students and store in filename
     @students.each do |student|
-      file.puts [student[:name], student[:cohort]].join(",")
+      csv << [student[:name], student[:cohort]]
     end
   end
   puts "Students were succesfully saved to #{filename}"
@@ -106,21 +92,22 @@ end
 
 def load_students_default(filename = "students.csv")
   # interate over each line and store to name, cohort variables
-  File.foreach(filename, "r") do |line|
-    name, cohort = line.chomp.split(',')
+  CSV.foreach(filename, "r") do |line|
+    name, cohort = line
     add_students(name, cohort = :november) 
   end
   puts "#{filename} was succesfully loaded"
 end
 
 def load_students(filename = "students.csv")
+  # ask for filename to upload and check if it exists.
   puts "Which file would you like to upload students from?"
   filename = STDIN.gets.chomp
-  if File.exists?(filename) # if it exists
+  if File.exists?(filename)
     load_students_default
-  else # if it doesn't exist
+  else 
     puts "Sorry, #{filename} file doesn't exist"
-    exit # quit the program
+    exit 
   end
 end
 
