@@ -1,17 +1,18 @@
+require 'csv'
+@students = []
 
-@students = [] 
-
-def input_students
-  user_input_message
-  name = STDIN.gets.chomp # get the first name
+def input_students_process
+  input_students_user_message 
+  name = STDIN.gets.chomp # get the first student name
   while !name.empty? do 
-    @students << {name: name, cohort: :november} # add the student hash to the array
+    add_students(name, cohort = :november) # add student info: hash to array
     puts "Now we have #{@students.count} students"
-    name = STDIN.gets.chomp # get another name from the user
+    name = STDIN.gets.chomp # get another input from user
   end
+  puts "Students were succesfully added"
 end 
 
-def user_input_message
+def input_students_user_message
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
 end
@@ -26,9 +27,9 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
-  puts "9. Exit" # 9 because we'll be adding more items
+  puts "3. Save students to a file"
+  puts "4. Load students from file"
+  puts "9. Exit" 
 end
 
 def show_students
@@ -38,10 +39,9 @@ def show_students
 end
 
 def process(selection)
-  # 3. do what the user has asked
-  case selection 
+  case selection # 3. do what the user has asked
     when "1"
-      input_students
+      input_students_process
     when "2"
       show_students
     when "3"
@@ -49,7 +49,8 @@ def process(selection)
     when "4"
       load_students
     when "9"
-      exit # this will cause the program to terminate
+      puts "Program exit successful. See you next time"
+      exit 
     else 
       puts "I don't know what you meant, try again"
   end
@@ -71,38 +72,54 @@ def print_footer
 end
 
 def save_students
-  # open the file for writing
-  file = File.open("students.csv", "w")
-  # interate over the array of students
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  puts "Please enter filename you'd like to save student info to: "
+  filename = STDIN.gets.chomp
+ CSV.open(filename, "wb") do |csv| # open the file for writing
+    @students.each do |student| # interate over the array of students and store in filename
+    csv << [student[:name], student[:cohort]]
+    end
   end
-  file.close
+  puts "Students were succesfully saved to #{filename}"
+end
+
+def load_students_default(filename = "students.csv")
+  CSV.foreach(filename, "r") do |line| # interate over each line and store to name, cohort variables
+    name, cohort = line
+    add_students(name, cohort = :november) 
+  end
+  puts "#{filename} was succesfully loaded"
 end
 
 def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort} 
+  puts "Which file would you like to upload students from?"
+  filename = STDIN.gets.chomp
+  if File.exists?(filename)
+    CSV.foreach(filename, "r") do |line|
+      name, cohort = line
+      add_students(name, cohort = :november)
+    end
+  else 
+    puts "Sorry, #{filename} file doesn't exist"
+    exit 
   end
-  file.close
+  puts "#{filename} was succesfully loaded"
 end
 
-def try_load_students
+def try_load_students_default
   filename = ARGV.first # first argument from the commman line
-  return if filename.nil? # get out of the method if it isn't given
-  if File.exists?(filename) # if it exists
-    load_students(filename)
+  (filename = "students.csv") if filename.nil? # default file if no argument given
+  if File.exists?(filename) 
+    load_students_default(filename)
     puts "Loaded #{@students.count} from #{filename}"
-  else # if it doesn't exist
+  else 
     puts "Sorry, #{filename} doesn't exist"
-    exit # quit the program
+    exit 
   end
 end
 
-#nothing happens until we call the methods
-try_load_students
+def add_students(name, cohort = :november)
+  @students << {name: name, cohort: cohort}
+end
+
+try_load_students_default
 interactive_menu
