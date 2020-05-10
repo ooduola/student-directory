@@ -1,17 +1,13 @@
 
-@students = [] # an empty array accessible to all methods
+@students = [] 
 
 def input_students
   user_input_message
-  # get the first name
-  name = STDIN.gets.chomp
-  # while the name is not empty, repeat this code
+  name = STDIN.gets.chomp # get the first name
   while !name.empty? do 
-    # add the student hash to the array
-    @students << {name: name, cohort: :november}
+    @students << {name: name, cohort: :november} # add the student hash to the array
     puts "Now we have #{@students.count} students"
-    # get another name from the user
-    name = STDIN.gets.chomp
+    name = STDIN.gets.chomp # get another name from the user
   end
 end 
 
