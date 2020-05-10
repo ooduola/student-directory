@@ -1,4 +1,1 @@
-
-File.open(__FILE__).each do |line| 
-  puts line 
-end
+puts File.read(__FILE__)
