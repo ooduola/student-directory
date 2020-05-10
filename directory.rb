@@ -2,8 +2,7 @@
 @students = [] # an empty array accessible to all methods
 
 def input_students
-  puts "Please enter the names of the students"
-  puts "To finish, just hit return twice"
+  user_input_message
   # get the first name
   name = STDIN.gets.chomp
   # while the name is not empty, repeat this code
@@ -15,6 +14,11 @@ def input_students
     name = STDIN.gets.chomp
   end
 end 
+
+def user_input_message
+  puts "Please enter the names of the students"
+  puts "To finish, just hit return twice"
+end
 
 def interactive_menu
   loop do
